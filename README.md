@@ -1,10 +1,12 @@
 # Azure Container Apps Sample - multi-container communication
 
-The following sample shows how to use Azure Container Apps to have one container call another within the environment.  This is possible both with or without [Dapr](https://dapr.io).  Dapr will provide mTLS, auto-retries, and additional telemetry if enabled.
+The following sample shows how to use Azure Container Apps to have one container call another within the environment.  This is possible both with or without [Dapr](https://dapr.io).  Dapr will provide mTLS, auto-retries, and additional telemetry if enabled.  
 
-Without Dapr - `main` branch
+The `nodeApp` (container-1-node) is an express.js API that will call a `/hello` endpoint.  This route will call the `dotnetApp` (container-2-dotnet) to return a message.  
+  
+Without Dapr - `main` branch  
 With Dapr - `dapr` branch
-
+  
 ## Deploy and Run
 
 ### Deploy via GitHub Actions (recommended)
