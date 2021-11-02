@@ -22,7 +22,7 @@ jobs:
       packages: write
     outputs:
       containerImage-node: ${{ steps.image-tag.outputs.image-node }}
-      containerImage-python: ${{ steps.image-tag.outputs.image-dotnet }}
+      containerImage-dotnet: ${{ steps.image-tag.outputs.image-dotnet }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
