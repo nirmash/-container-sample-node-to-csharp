@@ -22,7 +22,7 @@ module environment 'environment.bicep' = {
 module nodeApp 'container-app.bicep' = {
   name: 'nodeApp'
   params: {
-    containerAppName: 'nodeApp'
+    containerAppName: 'node-app'
     location: location
     environmentId: environment.outputs.environmentId
     containerImage: nodeImage
@@ -38,7 +38,7 @@ module nodeApp 'container-app.bicep' = {
 module dotnetApp 'container-app.bicep' = {
   name: 'dotnetApp'
   params: {
-    containerAppName: 'dotnetApp'
+    containerAppName: 'dotnet-app'
     location: location
     environmentId: environment.outputs.environmentId
     containerImage: dotnetImage
