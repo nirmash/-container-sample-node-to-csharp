@@ -21,7 +21,7 @@ resource containerApp 'Microsoft.Web/containerApps@2021-03-01' = {
     configuration: {
       secrets: [
         {
-          name: 'docker-password'
+          name: 'registry-password'
           value: containerRegistryPassword
         }
       ]      
