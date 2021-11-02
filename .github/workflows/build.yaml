@@ -89,6 +89,6 @@ jobs:
                 nodePort=3000 \
                 dotnetImage='${{ needs.build.outputs.containerImage-dotnetApp }}' \
                 dotnetPort=80 \
-                containerRegistry=${{ env.REGISTRY }} \
-                containerRegistryUsername=${{ github.actor }} \
-                containerRegistryPassword=${{ secrets.PACKAGES_TOKEN }}
+                registry=${{ env.REGISTRY }} \
+                registryUsername=${{ github.actor }} \
+                registryPassword=${{ secrets.PACKAGES_TOKEN }}
