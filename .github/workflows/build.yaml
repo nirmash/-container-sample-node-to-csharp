@@ -16,13 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        services: [ {'imageName': 'nodeApp', 'directory': './container-1-node'}, {'imageName': 'dotnetApp', 'directory': './container-2-dotnet'}]
+        services: [ {'imageName': 'node', 'directory': './container-1-node'}, {'imageName': 'dotnet', 'directory': './container-2-dotnet'}]
     permissions:
       contents: read
       packages: write
     outputs:
-      containerImage-node: ${{ steps.image-tag.outputs.image-nodeApp }}
-      containerImage-python: ${{ steps.image-tag.outputs.image-dotnetApp }}
+      containerImage-node: ${{ steps.image-tag.outputs.image-node }}
+      containerImage-python: ${{ steps.image-tag.outputs.image-dotnet }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -85,9 +85,9 @@ jobs:
             az group create -g ${{ secrets.RESOURCE_GROUP }} -l canadacentral
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/main.bicep \
              -p \
-                nodeImage='${{ needs.build.outputs.containerImage-nodeApp }}' \
+                nodeImage='${{ needs.build.outputs.containerImage-node }}' \
                 nodePort=3000 \
-                dotnetImage='${{ needs.build.outputs.containerImage-dotnetApp }}' \
+                dotnetImage='${{ needs.build.outputs.containerImage-dotnet }}' \
                 dotnetPort=80 \
                 registry=${{ env.REGISTRY }} \
                 registryUsername=${{ github.actor }} \
