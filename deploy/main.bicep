@@ -18,6 +18,25 @@ module environment 'environment.bicep' = {
   }
 }
 
+
+// Container-2-Dotnet (container-app.bicep)
+// We deploy it first so we can call it from the node-app
+module dotnetApp 'container-app.bicep' = {
+  name: 'dotnetApp'
+  params: {
+    containerAppName: 'dotnet-app'
+    location: location
+    environmentId: environment.outputs.environmentId
+    containerImage: dotnetImage
+    containerPort: dotnetPort
+    containerRegistry: registry
+    containerRegistryUsername: registryUsername
+    containerRegistryPassword: registryPassword
+    isExternalIngress: false
+  }
+}
+
+
 // Container-1-Node (container-app.bicep)
 module nodeApp 'container-app.bicep' = {
   name: 'nodeApp'
@@ -31,27 +50,11 @@ module nodeApp 'container-app.bicep' = {
     containerRegistryUsername: registryUsername
     containerRegistryPassword: registryPassword
     isExternalIngress: true
-  }
-}
-
-// Container-2-Dotnet (container-app.bicep)
-module dotnetApp 'container-app.bicep' = {
-  name: 'dotnetApp'
-  params: {
-    containerAppName: 'dotnet-app'
-    location: location
-    environmentId: environment.outputs.environmentId
-    containerImage: dotnetImage
-    containerPort: dotnetPort
-    containerRegistry: registry
-    containerRegistryUsername: registryUsername
-    containerRegistryPassword: registryPassword
-    // set an environment var for the FQDN to call
+    // set an environment var for the dotnetFQDN to call
     environmentVars: [
       {
-        DOTNET_SERVICE: nodeApp.outputs.fqdn
+        DOTNET_SERVICE: dotnetApp.outputs.fqdn
       }
     ]
-    isExternalIngress: false
   }
 }
