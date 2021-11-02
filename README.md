@@ -49,13 +49,29 @@ az containerapp env create \
   --logs-workspace-key $LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET \
   --location canadacentral
 
-# Deploy the container-1-node dotnet-app
+# Deploy the container-2-dotnet dotnet-app
+az containerapp create \
+  --name dotnet-app \
+  --resource-group 'sample-rg' \
+  --environment 'sample-env' \
+  --image 'ghcr.io/jeffhollan/container-sample-node-to-csharp/dotnet:main' \
+  --target-port 80 \
+  --ingress 'internal'
+
+DOTNET_FQDN=az containerapp show \
+  --resource-group 'sample-rg' \
+  --name dotnet-app \
+  --query configuration.ingress.fqdn
+
+# Deploy the container-1-node node-app
 az containerapp create \
   --name node-app \
   --resource-group 'sample-rg' \
   --environment 'sample-env' \
   --image 'ghcr.io/jeffhollan/container-sample-node-to-csharp/node:main' \
   --target-port 3000 \
-  --ingress 'external'
+  --ingress 'external' \
+  --environment-variables DOTNET_FQDN=$DOTNET_FQDN
+  --query configuration.ingress.fqdn
 ```
 
