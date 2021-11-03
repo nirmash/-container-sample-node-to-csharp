@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios').default;
 const dotnetAppId = process.env.DOTNET_APP_ID;
-const daprPort = process.env.DAPR_HTTP_PORT || 3500;
+const daprPort = process.env.DAPR_HTTP_PORT || 3000;
 
 /* GET users listing. */
 router.get('/', async  function(req, res, next) {
