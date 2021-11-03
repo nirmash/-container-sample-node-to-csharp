@@ -6,6 +6,15 @@ The `nodeApp` (container-1-node) is an express.js API that will call a `/hello` 
   
 Without Dapr - `main` branch  
 With Dapr - `dapr` branch
+
+I can call the dotnet-app from the node-app by calling it's FQDN. Even though I use the FQDN, calls within the environment will stay within the environment and network traffic will not leave.
+
+```js
+const dotnetFQDN = process.env.DOTNET_FQDN;
+// ...
+var data = await axios.get(`http://${dotnetFQDN}`);
+res.send(`${JSON.stringify(data.data)}`);
+```
   
 ## Deploy and Run
 
