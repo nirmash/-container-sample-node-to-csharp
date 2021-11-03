@@ -6,7 +6,7 @@ const dotnetFQDN = process.env.DOTNET_FQDN;
 /* GET users listing. */
 router.get('/', async  function(req, res, next) {
 
-  if(dotnetFQDN)  {
+  if(dotnetFQDN != null)  {
     // Even though we use the FQDN, because both containers are in the 
     // same environment, traffic will not leave the environment.
     var data = await axios.get(`http://${dotnetFQDN}`);
