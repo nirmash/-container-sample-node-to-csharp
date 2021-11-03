@@ -24,7 +24,7 @@ module environment 'environment.bicep' = {
 module dotnetApp 'container-app.bicep' = {
   name: 'dotnetApp'
   params: {
-    containerAppName: 'dotnet-app'
+    containerAppName: 'dotnet-app-dapr'
     location: location
     environmentId: environment.outputs.environmentId
     containerImage: dotnetImage
@@ -41,7 +41,7 @@ module dotnetApp 'container-app.bicep' = {
 module nodeApp 'container-app.bicep' = {
   name: 'nodeApp'
   params: {
-    containerAppName: 'node-app'
+    containerAppName: 'node-app-dapr'
     location: location
     environmentId: environment.outputs.environmentId
     containerImage: nodeImage
@@ -53,8 +53,8 @@ module nodeApp 'container-app.bicep' = {
     // set an environment var for the dotnetFQDN to call
     environmentVars: [
       {
-        name: 'DOTNET_SERVICE'
-        value: dotnetApp.outputs.fqdn
+        name: 'DOTNET_APP_ID'
+        value: 'dotnet-app-dapr'
       }
     ]
   }

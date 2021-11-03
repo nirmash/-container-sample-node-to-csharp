@@ -1,19 +1,21 @@
 var express = require('express');
 var router = express.Router();
 const axios = require('axios').default;
-const dotnetFQDN = process.env.DOTNET_FQDN;
+const dotnetAppId = process.env.DOTNET_APP_ID;
+const daprPort = process.env.DAPR_HTTP_PORT || 3500;
 
 /* GET users listing. */
 router.get('/', async  function(req, res, next) {
 
-  if(dotnetFQDN != null)  {
-    // Even though we use the FQDN, because both containers are in the 
-    // same environment, traffic will not leave the environment.
-    var data = await axios.get(`http://${dotnetFQDN}`);
+  if(dotnetAppId)  {
+    // Because we're using Dapr here, it will add mTLS, retries, and advanced telemetry
+    var data = await axios.get(`http://localhost:${daprPort}/hello`, {
+      headers: {'dapr-app-id': `${dotnetAppId}`} //sets app name for service discovery
+    });
     res.send(`${JSON.stringify(data.data)}`);
   }
   else {
-    res.send('No DOTNET_FQDN env variable defined. Be sure to set an env variable for the dotnetApp FQDN')
+    res.send('No DOTNET_APP_ID env variable defined. Be sure to set an env variable for the DOTNET_APP_ID for Dapr')
   }
 
 });
